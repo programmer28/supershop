@@ -1,10 +1,10 @@
 package mate.academy.internetshop.model;
 
 public class GeneratorId {
-    private static Long itemId = Long.valueOf(0);
-    private static Long bucketId = Long.valueOf(0);
-    private static Long userId = Long.valueOf(0);
-    private static Long orderId = Long.valueOf(0);
+    private static Long itemId = 0L;
+    private static Long bucketId = 0L;
+    private static Long userId = 0L;
+    private static Long orderId = 0L;
 
     public static Long getNewItemId() {
         return ++itemId;

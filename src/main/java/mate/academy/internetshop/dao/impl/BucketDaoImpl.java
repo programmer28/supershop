@@ -1,6 +1,7 @@
 package mate.academy.internetshop.dao.impl;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import mate.academy.internetshop.dao.BucketDao;
 import mate.academy.internetshop.dao.Storage;
@@ -17,43 +18,23 @@ public class BucketDaoImpl implements BucketDao {
 
     @Override
     public Optional<Bucket> get(Long bucketId) {
-        for (Bucket bucket : Storage.buckets) {
-            if (bucket.getId().equals(bucketId)) {
-                return Optional.of(bucket);
-            }
-        }
-        return Optional.empty();
+        return Storage.buckets.stream()
+                .filter(b -> b.getId().equals(bucketId))
+                .findFirst();
     }
 
     @Override
     public Bucket update(Bucket bucket) {
-        for (int i = 0; i < Storage.buckets.size(); i++) {
-            if (Storage.buckets.get(i).getId().equals(bucket.getId())) {
-                Storage.buckets.set(i, bucket);
-                return bucket;
-            }
-        }
-        return create(bucket);
-    }
-
-    @Override
-    public boolean deleteById(Long bucketId) {
-        for (int i = 0; i < Storage.buckets.size(); i++) {
-            if (Storage.buckets.get(i).getId().equals(bucketId)) {
-                return Storage.buckets.remove(i) != null ? true : false;
-            }
-        }
-        return false;
+        Bucket bucketToUpdate = get(bucket.getId())
+                .orElseThrow(() -> new NoSuchElementException("Can`t find bucket to update"));
+        bucketToUpdate.setItems(bucket.getItems());
+        bucketToUpdate.setUserId(bucket.getUserId());
+        return bucketToUpdate;
     }
 
     @Override
     public boolean delete(Bucket bucket) {
-        for (int i = 0; i < Storage.buckets.size(); i++) {
-            if (Storage.buckets.get(i).getId().equals(bucket.getId())) {
-                return Storage.buckets.remove(i) != null ? true : false;
-            }
-        }
-        return false;
+        return Storage.buckets.remove(bucket);
     }
 
     @Override

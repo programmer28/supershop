@@ -53,7 +53,6 @@ public class Main {
         bucketService.addItem(bucket, item1);
         bucketService.addItem(bucket, item2);
         bucketService.addItem(bucket, item3);
-        System.out.println(Storage.buckets);
         orderService.completeOrder(bucketService.getAllItems(bucket),user2);
         System.out.println(Storage.orders);
     }

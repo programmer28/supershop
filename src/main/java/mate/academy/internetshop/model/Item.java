@@ -6,12 +6,12 @@ import java.util.Objects;
 public class Item {
     private Long id;
     private String name;
-    private BigDecimal price;
+    private Double price;
 
     public Item(String name, Double price) {
         id = GeneratorId.getNewItemId();
         this.name = name;
-        this.price = BigDecimal.valueOf(price);
+        this.price = price;
     }
 
     public Long getId() {
@@ -30,12 +30,12 @@ public class Item {
         this.name = name;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
     public void setPrice(Double price) {
-        this.price = BigDecimal.valueOf(price);
+        this.price = price;
     }
 
     @Override
