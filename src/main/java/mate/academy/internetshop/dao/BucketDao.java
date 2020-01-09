@@ -11,8 +11,6 @@ public interface BucketDao {
 
     Bucket update(Bucket bucket);
 
-    boolean deleteById(Long bucketId);
-
     boolean delete(Bucket bucket);
 
     List<Bucket> getAll();

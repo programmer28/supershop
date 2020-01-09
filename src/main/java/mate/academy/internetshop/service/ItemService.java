@@ -8,7 +8,7 @@ public interface ItemService {
 
     Item create(Item item);
 
-    Optional<Item> get(Long itemId);
+    Item get(Long itemId);
 
     Item update(Item item);
 
@@ -16,5 +16,5 @@ public interface ItemService {
 
     boolean delete(Item item);
 
-    Optional<List<Item>> getAllItems();
+    List<Item> getAllItems();
 }

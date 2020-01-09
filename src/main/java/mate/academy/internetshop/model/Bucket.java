@@ -6,10 +6,20 @@ import java.util.List;
 public class Bucket {
     private Long id;
     private List<Item> items;
+    private Long userId;
+
 
     public Bucket() {
         id = GeneratorId.getNewBucketId();
         items = new ArrayList<>();
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Long getId() {
@@ -32,6 +42,7 @@ public class Bucket {
     public String toString() {
         return "Bucket{" + "id="
                 + id + ", items="
-                + items + '}';
+                + items + ", userId="
+                + userId + '}';
     }
 }

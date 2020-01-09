@@ -1,6 +1,7 @@
 package mate.academy.internetshop.dao.impl;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.dao.Storage;
@@ -17,43 +18,29 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public Optional<Item> get(Long itemId) {
-        for (Item item :Storage.items) {
-            if (item.getId().equals(itemId)) {
-                return Optional.of(item);
-            }
-        }
-        return Optional.empty();
+        return Storage.items.stream()
+                .filter(i -> i.getId().equals(itemId))
+                .findFirst();
     }
 
     @Override
     public Item update(Item item) {
-        for (int i = 0; i < Storage.items.size(); i++) {
-            if (Storage.items.get(i).getId().equals(item.getId())) {
-                Storage.items.set(i, item);
-                return item;
-            }
-        }
-        return create(item);
+        Item itemToUpdate = get(item.getId())
+                .orElseThrow(() -> new NoSuchElementException("Can`t find item to update"));
+        itemToUpdate.setName(item.getName());
+        itemToUpdate.setPrice(item.getPrice());
+        return itemToUpdate;
     }
 
     @Override
     public boolean deleteById(Long itemId) {
-        for (int i = 0; i < Storage.items.size(); i++) {
-            if (Storage.items.get(i).getId().equals(itemId)) {
-                return Storage.items.remove(i) != null ? true : false;
-            }
-        }
-        return false;
+        return Storage.items.remove(get(itemId).orElseThrow(()
+                -> new NoSuchElementException("Can`t find item to delete")));
     }
 
     @Override
     public boolean delete(Item item) {
-        for (int i = 0; i < Storage.items.size(); i++) {
-            if (Storage.items.get(i).getId().equals(item.getId())) {
-                return Storage.items.remove(i) != null ? true : false;
-            }
-        }
-        return false;
+        return Storage.items.remove(item);
     }
 
     @Override

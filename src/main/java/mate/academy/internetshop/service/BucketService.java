@@ -8,11 +8,10 @@ import mate.academy.internetshop.model.Item;
 public interface BucketService {
     Bucket create(Bucket bucket);
 
-    Optional<Bucket> get(Long bucketId);
+    Bucket get(Long bucketId);
 
     Bucket update(Bucket bucket);
 
-    boolean deleteById(Long bucketId);
 
     boolean delete(Bucket bucket);
 
