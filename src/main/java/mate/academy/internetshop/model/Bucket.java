@@ -8,7 +8,6 @@ public class Bucket {
     private List<Item> items;
     private Long userId;
 
-
     public Bucket() {
         id = GeneratorId.getNewBucketId();
         items = new ArrayList<>();
