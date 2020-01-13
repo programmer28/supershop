@@ -10,6 +10,11 @@ public class Bucket {
 
     public Bucket() {
         id = GeneratorId.getNewBucketId();
+    }
+
+    public Bucket(Long userId) {
+        this();
+        this.userId = userId;
         items = new ArrayList<>();
     }
 
