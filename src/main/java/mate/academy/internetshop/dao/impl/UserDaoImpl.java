@@ -34,4 +34,15 @@ public class UserDaoImpl implements UserDao {
     public boolean delete(User user) {
         return Storage.users.remove(user);
     }
+
+    @Override
+    public User findByLogin(String login, String password) {
+        Optional<User> user = Storage.users.stream()
+                .filter(u -> u.getLogin().equals(login))
+                .findFirst();
+        if (user.isEmpty() || !user.get().getPassword().equals(password)) {
+            throw new RuntimeException("Incorrect username or password");
+        }
+        return user.get();
+    }
 }

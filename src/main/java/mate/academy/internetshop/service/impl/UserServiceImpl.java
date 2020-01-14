@@ -41,4 +41,9 @@ public class UserServiceImpl implements UserService {
     public List<User> getAll() {
         return Storage.users;
     }
+
+    @Override
+    public User login(String login, String password) {
+        return userDao.findByLogin(login, password);
+    }
 }

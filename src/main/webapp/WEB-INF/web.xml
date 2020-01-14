@@ -87,7 +87,7 @@
     <servlet>
         <servlet-name>completeOrder</servlet-name>
         <servlet-class>mate.academy.internetshop.controller.CompleteOrderController</servlet-class>
-    </servlet>c
+    </servlet>
     <servlet-mapping>
         <servlet-name>completeOrder</servlet-name>
         <url-pattern>/servlet/completeOrder</url-pattern>
@@ -99,6 +99,14 @@
     <servlet-mapping>
         <servlet-name>deleteOrder</servlet-name>
         <url-pattern>/servlet/deleteOrder</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>loginController</servlet-name>
+        <servlet-class>mate.academy.internetshop.controller.LoginController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>loginController</servlet-name>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <listener>
         <listener-class>mate.academy.internetshop.controller.InjectInitializer</listener-class>

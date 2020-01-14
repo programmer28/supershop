@@ -13,4 +13,6 @@ public interface UserService {
     boolean delete(User user);
 
     List<User> getAll();
+
+    User login(String login, String password);
 }

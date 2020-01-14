@@ -14,4 +14,6 @@ public interface BucketDao {
     boolean delete(Bucket bucket);
 
     List<Bucket> getAll();
+
+    Bucket getByUserId(Long userId);
 }

@@ -11,4 +11,6 @@ public interface UserDao {
     User update(User user);
 
     boolean delete(User user);
+
+    User findByLogin(String login, String password);
 }

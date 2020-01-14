@@ -6,10 +6,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mate.academy.internetshop.lib.Inject;
-import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
 
-public class RegistrationController extends HttpServlet {
+public class LoginController extends HttpServlet {
 
     @Inject
     private static UserService userService;
@@ -17,19 +16,16 @@ public class RegistrationController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/views/register.jsp")
+        req.getRequestDispatcher("/WEB-INF/views/login.jsp")
                 .forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        User newUser = new User();
-        newUser.setLogin(req.getParameter("login"));
-        newUser.setPassword(req.getParameter("psw"));
-        newUser.setName(req.getParameter("user_name"));
-        newUser.setSurname(req.getParameter("user_surname"));
-        userService.create(newUser);
-        resp.sendRedirect(req.getContextPath() + "/servlet/getAllUsers");
+        String login = req.getParameter("login");
+        String password = req.getParameter("psw");
+        userService.login(login, password);
+        resp.sendRedirect(req.getContextPath() + "/index");
     }
 }
