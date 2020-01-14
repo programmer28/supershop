@@ -29,5 +29,6 @@
         </tr>
     </c:forEach>
 </table>
+<p><a href="${pageContext.request.contextPath}/servlet/completeOrder">CHECKOUT</a></p>
 </body>
 </html>

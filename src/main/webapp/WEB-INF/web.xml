@@ -76,6 +76,30 @@
         <servlet-name>deleteItemFromBucket</servlet-name>
         <url-pattern>/servlet/deleteItemFromBucket</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>showOrders</servlet-name>
+        <servlet-class>mate.academy.internetshop.controller.ShowOrdersController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>showOrders</servlet-name>
+        <url-pattern>/servlet/showOrders</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>completeOrder</servlet-name>
+        <servlet-class>mate.academy.internetshop.controller.CompleteOrderController</servlet-class>
+    </servlet>c
+    <servlet-mapping>
+        <servlet-name>completeOrder</servlet-name>
+        <url-pattern>/servlet/completeOrder</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>deleteOrder</servlet-name>
+        <servlet-class>mate.academy.internetshop.controller.DeleteOrderController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteOrder</servlet-name>
+        <url-pattern>/servlet/deleteOrder</url-pattern>
+    </servlet-mapping>
     <listener>
         <listener-class>mate.academy.internetshop.controller.InjectInitializer</listener-class>
     </listener>
