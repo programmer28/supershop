@@ -20,4 +20,6 @@ public interface BucketService {
     void clear(Bucket bucket);
 
     List<Item> getAllItems(Bucket bucket);
+
+    Bucket getByUserId(Long userId);
 }

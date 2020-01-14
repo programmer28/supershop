@@ -7,8 +7,13 @@ public class Item {
     private String name;
     private Double price;
 
-    public Item(String name, Double price) {
+    public Item() {
         id = GeneratorId.getNewItemId();
+
+    }
+
+    public Item(String name, Double price) {
+        this();
         this.name = name;
         this.price = price;
     }
