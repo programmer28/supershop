@@ -9,7 +9,6 @@ Hello Login page!
 <form action="/supershop_war_exploded/login" method="post">
     <div class="container">
         <h2>Login</h2>
-        <p>Please fill in this form to create an account.</p>
         <hr>
 
         <label for="login"><b>Login</b></label>
