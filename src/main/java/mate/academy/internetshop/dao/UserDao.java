@@ -13,7 +13,7 @@ public interface UserDao {
 
     boolean delete(User user);
 
-    Optional<User> findByLogin(String login) throws AuthenticationException;
+    Optional<User> findByLogin(String login);
 
     Optional<User> getByToken(String token);
 }
