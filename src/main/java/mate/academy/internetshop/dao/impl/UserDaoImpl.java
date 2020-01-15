@@ -4,6 +4,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import mate.academy.internetshop.dao.Storage;
 import mate.academy.internetshop.dao.UserDao;
+import mate.academy.internetshop.exceptions.AuthenticationException;
 import mate.academy.internetshop.lib.Dao;
 import mate.academy.internetshop.model.User;
 
@@ -33,5 +34,19 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean delete(User user) {
         return Storage.users.remove(user);
+    }
+
+    @Override
+    public Optional<User> findByLogin(String login) {
+        return Storage.users.stream()
+                .filter(u -> u.getLogin().equals(login))
+                .findFirst();
+    }
+
+    @Override
+    public Optional<User> getByToken(String token) {
+        return Storage.users.stream()
+                .filter(u -> u.getToken().equals(token))
+                .findFirst();
     }
 }
