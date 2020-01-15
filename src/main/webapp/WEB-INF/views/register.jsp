@@ -5,7 +5,7 @@
 </head>
 <body>
 Let`s create a new user!
-<form action="/supershop_war_exploded/servlet/registration" method="post">
+<form action="/supershop_war_exploded/registration" method="post">
     <div class="container">
         <h2>Register</h2>
         <p>Please fill in this form to create an account.</p>

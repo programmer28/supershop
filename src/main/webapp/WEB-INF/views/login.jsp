@@ -5,6 +5,7 @@
 </head>
 <body>
 Hello Login page!
+<div>${ERRORMessage}</div>
 <form action="/supershop_war_exploded/login" method="post">
     <div class="container">
         <h2>Login</h2>
