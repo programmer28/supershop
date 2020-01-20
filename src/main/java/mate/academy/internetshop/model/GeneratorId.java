@@ -5,6 +5,7 @@ public class GeneratorId {
     private static Long bucketId = 0L;
     private static Long userId = 0L;
     private static Long orderId = 0L;
+    private static Long roleId = 0L;
 
     public static Long getNewItemId() {
         return ++itemId;
@@ -20,5 +21,9 @@ public class GeneratorId {
 
     public static Long getNewOrderId() {
         return ++orderId;
+    }
+
+    public static Long getNewRoleId() {
+        return ++roleId;
     }
 }
