@@ -16,14 +16,18 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class AuthorizationFilter implements Filter {
-
     public static final String EMPTY_STRING = "";
+    private static Logger logger = LogManager.getLogger(AuthorizationFilter.class);
+
     @Inject
     private static UserService userService;
 
@@ -70,7 +74,14 @@ public class AuthorizationFilter implements Filter {
             processUnAuthenticated(req, resp);
             return;
         } else {
-            Optional<User> user = userService.getByToken(token);
+            Optional<User> user = null;
+            try {
+                user = userService.getByToken(token);
+            } catch (DataProcessingException e) {
+                logger.error(e);
+                req.setAttribute("dpa_msg", e.getMessage());
+                req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
+            }
             if (user.isPresent()) {
                 //check the user role
                 if (verifyRole(user.get(), roleName)) {

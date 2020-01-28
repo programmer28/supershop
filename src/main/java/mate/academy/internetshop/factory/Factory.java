@@ -7,10 +7,10 @@ import mate.academy.internetshop.dao.BucketDao;
 import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.dao.OrderDao;
 import mate.academy.internetshop.dao.UserDao;
-import mate.academy.internetshop.dao.impl.BucketDaoImpl;
-import mate.academy.internetshop.dao.impl.OrderDaoImpl;
-import mate.academy.internetshop.dao.impl.UserDaoImpl;
+import mate.academy.internetshop.dao.jdbc.BucketDaoJdbcImpl;
 import mate.academy.internetshop.dao.jdbc.ItemDaoJdbcImpl;
+import mate.academy.internetshop.dao.jdbc.OrderDaoJdbcImpl;
+import mate.academy.internetshop.dao.jdbc.UserDaoJdbcImpl;
 import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.ItemService;
 import mate.academy.internetshop.service.OrderService;
@@ -56,21 +56,21 @@ public class Factory {
 
     public static BucketDao getBucketDao() {
         if (bucketDao == null) {
-            return new BucketDaoImpl();
+            return new BucketDaoJdbcImpl(connection);
         }
         return bucketDao;
     }
 
     public static UserDao getUserDao() {
         if (userDao == null) {
-            return new UserDaoImpl();
+            return new UserDaoJdbcImpl(connection);
         }
         return userDao;
     }
 
     public static OrderDao getOrderDao() {
         if (orderDao == null) {
-            return new OrderDaoImpl();
+            return new OrderDaoJdbcImpl(connection);
         }
         return orderDao;
     }
