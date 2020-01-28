@@ -36,19 +36,7 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
             throw new DataProcessingException(
                     "Can`t insert bucket into test.buckets" + e);
         }
-        String insertBucketItemQuery = "INSERT INTO test.buckets_items"
-                + "(bucket_id, item_id) "
-                + "VALUES (?, ?);";
-        try (PreparedStatement statement = connection.prepareStatement(insertBucketItemQuery)) {
-            statement.setLong(1, bucketId);
-            for (Item item : bucket.getItems()) {
-                statement.setLong(2, item.getId());
-                statement.execute();
-            }
-        } catch (SQLException e) {
-            throw new DataProcessingException(
-                    "Can`t insert items into test.buckets_items" + e);
-        }
+        insertIntoBucketItems(bucket);
         return bucket;
     }
 
@@ -91,26 +79,8 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
 
     @Override
     public Bucket update(Bucket bucket) throws DataProcessingException {
-        String removeBucketsItems =
-                "DELETE FROM test.buckets_items WHERE bucket_id = ?;";
-        try (PreparedStatement statement
-                     = connection.prepareStatement(removeBucketsItems)) {
-            statement.setLong(1, bucket.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DataProcessingException("Can't update the buckets " + e);
-        }
-        String insertIntoBucketsItems =
-                "INSERT INTO test.buckets_items (bucket_id, item_id) VALUES(?, ?);";
-        try (PreparedStatement statement = connection.prepareStatement(insertIntoBucketsItems)) {
-            statement.setLong(1, bucket.getId());
-            for (Item item : bucket.getItems()) {
-                statement.setLong(2, bucket.getId());
-                statement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            throw new DataProcessingException("Can't update the buckets " + e);
-        }
+        delete(bucket);
+        insertIntoBucketItems(bucket);
         return bucket;
     }
 
@@ -160,6 +130,20 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
         } catch (SQLException e) {
             throw new DataProcessingException(
                     "Can't get bucket from test.buckets by user id " + userId + e);
+        }
+    }
+
+    private void insertIntoBucketItems(Bucket bucket) throws DataProcessingException {
+        String insertIntoBucketsItems =
+                "INSERT INTO test.buckets_items (bucket_id, item_id) VALUES(?, ?);";
+        try (PreparedStatement statement = connection.prepareStatement(insertIntoBucketsItems)) {
+            statement.setLong(1, bucket.getId());
+            for (Item item : bucket.getItems()) {
+                statement.setLong(2, bucket.getId());
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new DataProcessingException("Can`t insert items into test.buckets_items " + e);
         }
     }
 }

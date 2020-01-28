@@ -37,19 +37,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             throw new DataProcessingException(
                     "Can`t insert order into test.orders" + e);
         }
-        String insertOrderItemQuery = "INSERT INTO test.orders_items"
-                + "(order_id, item_id) "
-                + "VALUES (?, ?);";
-        try (PreparedStatement statement = connection.prepareStatement(insertOrderItemQuery)) {
-            statement.setLong(1, orderId);
-            for (Item item : order.getItems()) {
-                statement.setLong(2, item.getId());
-                statement.execute();
-            }
-        } catch (SQLException e) {
-            throw new DataProcessingException(
-                    "Can`t insert items into test.orders_items" + e);
-        }
+        insertIntoOrdersItems(order);
         return order;
     }
 
@@ -92,26 +80,8 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
 
     @Override
     public Order update(Order order) throws DataProcessingException {
-        String removeOrdersItems =
-                "DELETE FROM test.orders_items WHERE order_id = ?;";
-        try (PreparedStatement statement
-                     = connection.prepareStatement(removeOrdersItems)) {
-            statement.setLong(1, order.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DataProcessingException("Can't update the orders " + e);
-        }
-        String insertIntoOrdersItems =
-                "INSERT INTO test.orders_items (order_id, item_id) VALUES(?, ?);";
-        try (PreparedStatement statement = connection.prepareStatement(insertIntoOrdersItems)) {
-            statement.setLong(1, order.getId());
-            for (Item item : order.getItems()) {
-                statement.setLong(2, order.getId());
-                statement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            throw new DataProcessingException("Can't update the orders " + e);
-        }
+        delete(order);
+        insertIntoOrdersItems(order);
         return order;
     }
 
@@ -173,5 +143,19 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
                     "Can't get orders from test.orders by " + user.getId() + e);
         }
         return list;
+    }
+
+    private void insertIntoOrdersItems(Order order) throws DataProcessingException {
+        String insertIntoOrdersItems =
+                "INSERT INTO test.orders_items (order_id, item_id) VALUES(?, ?);";
+        try (PreparedStatement statement = connection.prepareStatement(insertIntoOrdersItems)) {
+            statement.setLong(1, order.getId());
+            for (Item item : order.getItems()) {
+                statement.setLong(2, order.getId());
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new DataProcessingException("Can`t insert items into test.orders_items " + e);
+        }
     }
 }
