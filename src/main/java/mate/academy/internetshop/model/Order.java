@@ -11,6 +11,12 @@ public class Order {
         id = GeneratorId.getNewOrderId();
     }
 
+    public Order(Long id, Long userId, List<Item> items) {
+        this.id = id;
+        this.userId = userId;
+        this.items = items;
+    }
+
     public Long getId() {
         return id;
     }
