@@ -13,6 +13,7 @@ import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.lib.Service;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
+import mate.academy.internetshop.util.HashUtil;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,12 +23,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) throws DataProcessingException {
-        user.setToken(getToken());
+        user = setPasswordSaltTokenIntoUser(user);
         return userDao.create(user);
     }
 
     private String getToken() {
         return UUID.randomUUID().toString();
+    }
+
+    private User setPasswordSaltTokenIntoUser(User user) {
+        byte[] salt = HashUtil.getSalt();
+        String hashPassword = HashUtil.hashPassword(user.getPassword(), salt);
+        user.setPassword(hashPassword);
+        user.setSalt(salt);
+        user.setToken(getToken());
+        return user;
     }
 
     @Override
@@ -38,6 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) throws DataProcessingException {
+        user = setPasswordSaltTokenIntoUser(user);
         return userDao.update(user);
     }
 
@@ -55,10 +66,13 @@ public class UserServiceImpl implements UserService {
     public User login(String login, String password)
             throws AuthenticationException, DataProcessingException {
         Optional<User> user = userDao.findByLogin(login);
-        if (user.isEmpty() || !user.get().getPassword().equals(password)) {
-            throw new AuthenticationException("Incorrect username or password");
+        if (user.isPresent()) {
+            String currentHashPassword = HashUtil.hashPassword(password, user.get().getSalt());
+            if (currentHashPassword.equals(user.get().getPassword())) {
+                return user.get();
+            }
         }
-        return user.get();
+        throw new AuthenticationException("Incorrect username or password");
     }
 
     @Override
