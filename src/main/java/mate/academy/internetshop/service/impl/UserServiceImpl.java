@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) throws DataProcessingException {
-        user = setPasswordSaltTokenIntoUser(user);
+        user = setAdditionalParameters(user);
         return userDao.create(user);
     }
 
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
         return UUID.randomUUID().toString();
     }
 
-    private User setPasswordSaltTokenIntoUser(User user) {
+    private User setAdditionalParameters(User user) {
         byte[] salt = HashUtil.getSalt();
         String hashPassword = HashUtil.hashPassword(user.getPassword(), salt);
         user.setPassword(hashPassword);
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) throws DataProcessingException {
-        user = setPasswordSaltTokenIntoUser(user);
+        user = setAdditionalParameters(user);
         return userDao.update(user);
     }
 

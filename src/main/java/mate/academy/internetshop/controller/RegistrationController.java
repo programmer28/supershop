@@ -41,7 +41,7 @@ public class RegistrationController extends HttpServlet {
             user = userService.create(newUser);
         } catch (DataProcessingException e) {
             logger.error(e);
-            req.setAttribute("dpa_msg", e.getMessage());
+            req.setAttribute("dpa_msg", e);
             req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
         }
         HttpSession session = req.getSession(true);
