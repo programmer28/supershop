@@ -8,6 +8,7 @@ public class User {
     private String surname;
     private String login;
     private String password;
+    private byte[] salt;
     private String token;
     private Set<Role> roles = new HashSet<>();
     private Long id;
@@ -31,6 +32,14 @@ public class User {
 
     public void addRole(Role role) {
         roles.add(role);
+    }
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
     }
 
     public String getName() {

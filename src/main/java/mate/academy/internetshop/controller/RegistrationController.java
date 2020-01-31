@@ -35,12 +35,13 @@ public class RegistrationController extends HttpServlet {
         newUser.setPassword(req.getParameter("psw"));
         newUser.setName(req.getParameter("user_name"));
         newUser.setSurname(req.getParameter("user_surname"));
+
         User user = null;
         try {
             user = userService.create(newUser);
         } catch (DataProcessingException e) {
             logger.error(e);
-            req.setAttribute("dpa_msg", e.getMessage());
+            req.setAttribute("dpa_msg", e);
             req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
         }
         HttpSession session = req.getSession(true);
